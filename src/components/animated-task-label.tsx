@@ -76,12 +76,17 @@ const AnimatedTaskLabel = (props: Props) => {
   return (
     <Box onLayout={onLayout}>
       <AnimatedHSTack
-        textAlign='left'
         isTruncated={true}
         style={[animatedHStackStyles]}
         // @ts-ignore
         animatedProps={animatedTextColorStyles}
-      >{subject}</AnimatedHSTack>
+      >
+        <Text
+          fontSize='16'
+        >
+          {subject}
+        </Text>
+      </AnimatedHSTack>
       <HStackOffset
         position='absolute'
         top={(heightParentBox / 2)}

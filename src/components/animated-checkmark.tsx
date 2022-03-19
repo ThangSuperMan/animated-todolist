@@ -10,11 +10,12 @@ interface Props {
   d: string
   strokeColor: string
   strokeOpacity?: number
+  strokeWidth?: number
   progress: Animated.SharedValue<number>
 }
 
 const AnimatedCheckmark = (props: Props) => {
-  const { d, progress, strokeColor, strokeOpacity } = props
+  const { d, progress, strokeColor, strokeOpacity, strokeWidth } = props
 
   const [length, setLength] = useState<number>(0)
   const ref = useRef(null)
@@ -25,13 +26,14 @@ const AnimatedCheckmark = (props: Props) => {
     })
   )
 
+
   return (
     <AnimatedPath
       // @ts-ignore
       onLayout={() => setLength(ref.current.getTotalLength())}
       ref={ref}
       d={d}
-      strokeWidth={5}
+      strokeWidth={strokeWidth}
       stroke={strokeColor}
       opacity={strokeOpacity}
       strokeLinejoin='round'

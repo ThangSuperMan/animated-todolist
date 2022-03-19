@@ -11,10 +11,10 @@ const AppContainer = (props: Props) => {
   return (
     <NativeBaseProvider>
       <Box
-        flex='1'
-        p={7}
         _dark={{ bg: 'black' }}
         _light={{ bg: 'white' }}
+        w='full'
+        h='full'
         justifyContent='center'
         alignItems='center'
       >

@@ -1,25 +1,39 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box } from 'native-base'
-// @ts-ignore
-import ButtonAddNewTaskItem from './button-add-task-item'
 import TaskItem from './task-item'
 
 type TaskItem = {
+  id: number
   subject: string
 }
 
-const TaskList = () => {
-  const [listTaskItem, setListTaskItem] = useState<TaskItem[]>([
-    { subject: 'eat banana' },
-    { subject: 'go to cafe' },
+const TaskList = React.memo((props: any) => {
+  const { data } = props
+  const [taskList, setTaskList] = useState<TaskItem[]>([
+    { id: 9, subject: 'play with dogs' }
   ])
 
-  console.log('task-list is rendering')
+  useEffect(() => {
+    data.forEach((item: TaskItem) => {
+      setTaskList(oldData => [...oldData, item])
+    })
+  }, [data])
 
+  console.log('rendering the task-list')
 
   return (
-    <TaskItem subject='subject' />
+    <Box
+      w='full'
+    >
+      {
+        taskList.map((item: any, index: number) => {
+          return (
+            <TaskItem key={index} subject={item.subject} />
+          )
+        })
+      }
+    </Box>
   )
-}
+})
 
 export default TaskList;

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import colors from '../../styles/colors'
-import { Pressable } from 'react-native'
 import Animated,
 {
   withTiming,
@@ -9,7 +8,6 @@ import Animated,
   Easing,
   interpolateColor,
 } from 'react-native-reanimated'
-import { Text } from 'native-base'
 import Svg, { Rect, G, ClipPath } from 'react-native-svg'
 import AnimatedCheckmark from './animated-checkmark'
 
@@ -23,7 +21,6 @@ const vWidth = 64 + MARGIN;
 const vHeight = 64 + MARGIN;
 
 const AnimatedRect = Animated.createAnimatedComponent(Rect)
-console.log('single script from animated-checkbox.tsx')
 
 const easing = Easing.linear
 const d = "M70 1.5C56 -1 27 48.5944 28 46.0944C26.4 43.2944 22.5 38 19.5 36.5"
@@ -36,7 +33,6 @@ interface Props {
 
 const AnimatedCheckbox = React.memo((props: Props) => {
   const { checked } = props
-  //const [checked, setChecked] = useState(false)
   const progress = useSharedValue(0)
 
   const animatedRectProps = useAnimatedProps(
@@ -60,7 +56,7 @@ const AnimatedCheckbox = React.memo((props: Props) => {
   useEffect(() => {
     progress.value = withTiming(
       checked ? 1 : 0,
-      { duration: checked ? 300 : 50, easing }
+      { duration: checked ? 300 : 100, easing }
     )
   }, [checked])
 
@@ -69,18 +65,23 @@ const AnimatedCheckbox = React.memo((props: Props) => {
       <ClipPath id='myClipPath'>
         <Rect width="64" height="64" rx="14.5" stroke="black" />
       </ClipPath>
-      <AnimatedCheckmark d={d} strokeOpacity={checked ? 1 : 0} progress={progress} strokeColor={colors.highlightColor} />
+      <AnimatedCheckmark d={d}
+        strokeOpacity={checked ? 1 : 0}
+        progress={progress}
+        strokeColor={colors.highlightColor}
+        strokeWidth={7}
+      />
       <G clipPath='url(#myClipPath)'>
         <AnimatedRect
           width='64'
           height='64'
           strokeLinejoin='round'
           strokeLinecap='round'
-          strokeWidth={5}
+          strokeWidth={7}
           rx='14.5'
           animatedProps={animatedRectProps}
         />
-        <AnimatedCheckmark d={d} progress={progress} strokeColor='#ffffff' />
+        <AnimatedCheckmark d={d} progress={progress} strokeWidth={5} strokeColor='#ffffff' />
       </G>
     </Svg>
   )
